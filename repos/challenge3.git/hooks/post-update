@@ -1,0 +1,30 @@
+#!/bin/sh
+#
+# An example hook script to prepare a packed repository for use over
+# dumb transports.
+#
+# To enable this hook, rename this file to "post-update".
+
+# read all lines in lines array
+
+echo
+echo "- ---- ---- Git Course Checks ---- ---- -"
+python3 hooks/challenge $1
+exit_code=$?
+echo "- ---- ---- --- ------ ------ ---- ---- -"
+echo
+
+if [ $exit_code -ne 0 ]; then
+  echo "Deleting Ref: '$1'"
+  echo "[-] Pushed commits are discarded upstream - try again!"
+  git update-ref -d $1
+  echo
+else
+  echo "[+] Challenge succeeded! Move on..."
+  echo
+fi
+
+git update-server-info
+
+exit $exit_code
+
