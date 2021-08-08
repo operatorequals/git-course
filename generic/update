@@ -126,9 +126,9 @@ esac
 
 # --- Finished
 
-if [ "$refname" = "refs/heads/master" ]; then
+if [ "$(grep $refname hooks/protected_refs.txt)" ]; then
   echo
-  echo "Updates to branch 'master' are prohibited!"
+  echo "Updates to branch '$refname' are prohibited!"
   echo "Create your own branches to try the challenge"
   echo
   exit 1
