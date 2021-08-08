@@ -1,0 +1,116 @@
+#!/usr/bin/env python3
+
+MASTER_COMMIT = "8fd8f49595389c9198d206fbbb3c06b09e9fbd00"
+SECRET_PART = "dd02c"
+FILES_TO_CHANGE = ["main.py"]
+
+import pygit2
+import sys
+import os
+
+from gitcourselib import check_commit, _logprint
+
+# Initialize Repository object
+repo_path = pygit2.discover_repository(os.getcwd())
+repo = pygit2.Repository(repo_path)
+
+# Commit to check against
+MASTER_COMMIT_OBJ = repo.get(MASTER_COMMIT)
+
+# Argument 1 is refs/heads/<branch-name>
+ref = sys.argv[1]
+ref_obj = repo.references[ref]
+
+if str(repo.merge_base(MASTER_COMMIT, ref_obj.target)) != MASTER_COMMIT:
+  _logprint("[{ref_obj.name}] Branch incompatible with 'master' - please rebase...", ref)
+  sys.exit(2)
+
+
+def check_secret(commit):
+  tree = commit.tree
+  # Check against previous from the splitted commit (does not contain 'about' yet)
+  diff = tree.diff_to_tree(commit.parents[0].tree)
+  patches = [p for p in diff]
+
+  # Looking for the patch against 'main.py'
+  checked_patch = None
+  for p in patches:
+    if p.delta.new_file.path == "main.py":
+      checked_patch = p
+      break
+  if checked_patch is None:
+    return False, f"[{commit.id}] commit has not changed the 'main.py' file."
+
+  # Examine all commited hunks for lines
+  # All changed lines must not contain the hardcoded secret
+  commit_code = ""
+  for hunk in checked_patch.hunks:
+    for l in hunk.lines:
+      # print(l.origin, l.content, hunk)
+      if l.new_lineno == -1:
+
+        # print(l.origin, l.content, hunk)
+        commit_code += l.content
+
+  if SECRET_PART in commit_code:
+    return False, f"[{commit.id}] Commit seems to still contain the secret."
+
+  return True, f"[{commit.id}] Hardcoded secret not found!"
+
+
+def check_diff(ref_obj):
+
+  tree = ref_obj.peel().tree
+  diff = tree.diff_to_index(repo.index)
+  patches = [p for p in diff]
+
+  if len(patches) > 2:
+    return False, f"[{ref_obj.name}] Fixing a hardcoded secret should not require a new file."
+
+  files_changed = {} # {filepath: similarity-ratio}
+  for p in patches:
+    if (p.delta.old_file.path != p.delta.new_file.path):
+      return False, f"[{ref_obj.name}] Renaming a file should not be required."
+
+    if p.delta.similarity != 0:
+      files_changed[p.delta.old_file.path] = p.delta.similarity
+
+  for f in files_changed.keys():
+    if f not in FILES_TO_CHANGE:
+      return False, f"[{ref_obj.name}] Looks like the file '{f}' is not modified."
+    else:
+      if files_changed[f] < 50 :
+        return False, f"[{ref_obj.name}] Looks like the file '{f}' is modified too much."
+
+  return True, f"[{ref_obj.name}] passes!"
+
+
+checked_commits = 0
+for commit in repo.walk(ref_obj.target, pygit2.GIT_SORT_TOPOLOGICAL):
+  # If the master commit was found - stop traversing
+  if str(commit.id) == MASTER_COMMIT:
+      break
+
+  checked_commits += 1
+
+  # Check all commits for formatting
+  pass_, message = check_commit(commit)
+  _logprint(message, ref)
+  if not pass_ :
+    sys.exit(1)
+
+
+  if commit.message.lower().startswith("[routes]"):
+    pass_, message = check_secret(commit)
+    _logprint(message, ref)
+    if not pass_ :
+      sys.exit(1)
+
+print()
+# Check the final patch for sanity
+pass_, message = check_diff(ref_obj)
+_logprint(message, ref)
+if not pass_ :
+  sys.exit(1)
+
+sys.exit(0)
