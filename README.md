@@ -1,11 +1,11 @@
-# OperatorEquals' Git Course!
+# OperatorEquals' Sandbox Git Course!
 
 ## Preface
 This Git course is an ongoing project containing use cases that I've met (and still meet) while working in the IT industry as
 *IT Security Consultant* (e.g Code Auditor) and *IT Security Engineer* (SecDevOps - Infrascode guy and CI/CD guy),
 as well as an independent software and security tool *Developer*.
 
-I struggled a lot to learn Git (you can see my struggle in my [Public Repos](https://github.com/operatorequals?tab=repositories)), yet it always amazed me.
+I struggled a lot learning Git (you can see my ongoing struggle in my [Public Repos](https://github.com/operatorequals?tab=repositories)), yet it amazes me.
 The problem was always that as a newbie I never found a resource that actually helped me understand what I was doing, but only commands a guru wrote somewhere on
 [StackExchange](https://stackexchange.com/) to someone having some problem that seemed close to mine.
 
@@ -37,13 +37,16 @@ cat README.md
 git log
 ```
 
-And what you have to do to solve the challenge should be clear by then!
+What you have to do to solve the challenge should be clear by then!
+
 What is left is to create *a new branch*, do your magic and then `git push origin <yourbranch>` to get the feedback from the Git Course Server.
 The Git Course Server checks each commit (message AND contents) for specific requirements, such as commit message conventions, expected code, file similarity,
 and others. Every challenge has a dedicated script checking pushed commits, as each time the objectives are different and need to be checked in specific ways.
 
-If a commit does not pass the tests (or the whole diff), an informative message with the commit hash appears as a result of `git push` and the upstream changes
+If a commit (or the whole diff) does not pass the tests, an informative message with the commit hash appears as a result of `git push` and the upstream changes
 are discarded. You can `git push` your changes forever and check every part of your solution. There is no "final" push - it is no exam. It is a sandbox!
+
+Finally, there is no scoring, no leaderboard and no logs of what you do! Learning sometimes takes suffering and frustration and watching people suffer or rewarding frustration points has never worked as a teaching experience for me.
 
 
 ## The Challenges
@@ -82,30 +85,30 @@ git clone https://git-interactive-course.herokuapp.com/challenge3.git
 
 ## Run Locally
 If you feel like hosting the whole project on your premises you can easily do so using Containers.
-There are two git repository connectivity options, the `http` and the `ssh`.
+There are two Git repository connectivity options, the `http` and the `ssh`.
 The `Makefile` residing in this repository will create a container image by just issuing `make image` - the `TYPE` parameter accepts both `ssh` and `http`(default),
 and from there the sky is the limit!
 
 You can go with `docker run ...` or even use Kubernetes and host it company-wide for a training session, or anything that runs containers basically.
 
 
-## Feedback and Dev Mode
+## Feedback and *Dev-Mode*
 This is an Open-Source Project hosted on Free services and under Public Domain. Any feedback on it, such as bugs on challenge checks or repositories,
-recommendations for new challenges, typos and all else, are all welcome under the [Issues section of this repository](https://github.com/operatorequals/git-course/issues).
+recommendations for new challenges, typos and all else, are all welcome under the [*Issues* section of this repository](https://github.com/operatorequals/git-course/issues).
 Also Pull Requests are very welcome and will be greatly appreciated!
 
 
 ## This Repository
-Creating a Git course explaining techniques and best-practices in repository that does not use them itself does not make sense.
-So this Git repository follows Git message conventions and does have Atomic commits (as much as possible). Also, in case you go
+Creating a Git course and explaining techniques and best-practices in a repository that does not use them itself does not make sense.
+So this Git repository follows Git message conventions and does have atomic commits (as much as possible). Also, in case you go
 *Dev-mode* you can ALWAYS find information on commit messages! Writing the commit message sometimes takes as much as the code
-itself, and it is all writen with explaining to other (+ futture self) everything that is getting done *and why*.
+itself. Also, they are all writen with explaining to others (+ future self) everything that is getting done *and why* in mind.
 
 
 ## Donations
 In case my work helped you, you can always buy me a beer or a liter of gas [through the Internet](https://www.buymeacoffee.com/operatorequals) or in case you meet me personally.
 In the second case we can talk about privacy (during drinking the beer or driving somewhere), about the funny idea that
 [Git resembles the Human Psychology](https://securosophy.com/2017/04/01/a-git-tutorial-of-human-psychology/), about self-organized communes
-or something that you'll bring up :)
+or anything you bring up :)
 
 [![donation](https://cdn-images-1.medium.com/max/738/1*G95uyokAH4JC5Ppvx4LmoQ@2x.png)](https://www.buymeacoffee.com/operatorequals)
