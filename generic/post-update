@@ -18,11 +18,17 @@ if [ $exit_code -ne 0 ]; then
   echo "Deleting Ref: '$1'"
   echo "[-] Pushed commits are discarded upstream - try again!"
   git update-ref -d $1
-  echo
 else
   echo "[+] Challenge succeeded! Move on..."
   echo
+  if [ -e hooks/asciinema.txt ]; then
+    echo "Proposed solution(s):"
+    for url in $(cat hooks/asciinema.txt); do
+      echo "~> $url"
+    done
+  fi
 fi
+echo
 
 git update-server-info
 
