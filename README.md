@@ -104,6 +104,14 @@ So this Git repository follows Git message conventions and does have atomic comm
 *Dev-mode* you can ALWAYS find information on commit messages! Writing the commit message sometimes takes as much as the code
 itself. Also, they are all writen with explaining to others (+ future self) everything that is getting done *and why* in mind.
 
+## Implementation
+The challenge feedback is solely based on the Git mechanism of [Server-Side hooks](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks#_server_side_hooks). Specifically, `update` is used for branch-protection and `post-update` for the challenge checks.
+The challenge checks are implemented in Python3 using [PyGit2](https://www.pygit2.org) to programmatically inspect Git objects (analyze commits, diffs, refs/branches, etc).
+
+A small Python3 module is sloppily getting developed for generic commit checks ([gitcourselib.py](https://github.com/operatorequals/git-course/blob/master/generic/gitcourselib.py)) that could maybe be used independently.
+
+Git Transports that are supported are `ssh` and `http`, implemented with basic OpenSSH with `git-shell` startup shell for `ssh`
+and a custom Apache2 configuration for `http`. All parts of the implementation are Open-Source and available under `deploy/`.
 
 ## Donations
 In case my work helped you, you can always buy me a beer or a liter of gas [through the Internet](https://www.buymeacoffee.com/operatorequals) or in case you meet me personally.
