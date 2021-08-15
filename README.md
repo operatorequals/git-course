@@ -81,6 +81,14 @@ challenge does give great insight not only on correctly managing secrets in code
 git clone https://git-interactive-course.herokuapp.com/challenge3.git
 ```
 
+### Challenge 4 - *2 Devs - 1 Branch* (1)
+This challenge asks the solver to follow the commit history of 2 Developer branches and create a branch containing all implemented features.
+A very real scenario, as in this case, the implemented features were developed simultaneously, so changing Feature1 renders Feature2 outdated.
+
+```bash
+git clone https://git-interactive-course.herokuapp.com/challenge4.git
+```
+
 ### More to come...
 
 ## Run Locally
