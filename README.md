@@ -121,6 +121,17 @@ A small Python3 module is sloppily getting developed for generic commit checks (
 Git Transports that are supported are `ssh` and `http`, implemented with basic OpenSSH with `git-shell` startup shell for `ssh`
 and a custom Apache2 configuration for `http`. All parts of the implementation are Open-Source and available under `deploy/`.
 
+## References
+Stuff that helped me get things done with Git:
+* https://githowto.com
+* https://ohshitgit.com
+
+Stuff that helped me visualize what's going on:
+* https://git-school.github.io/visualizing-git/
+* https://learngitbranching.js.org/
+* https://marklodato.github.io/visual-git-guide/index-en.html
+* https://agripongit.vincenttunru.com/
+
 ## Donations
 In case my work helped you, you can always buy me a beer or a liter of gas [through the Internet](https://www.buymeacoffee.com/operatorequals) or in case you meet me personally.
 In the second case we can talk about privacy (during drinking the beer or driving somewhere), about the funny idea that
