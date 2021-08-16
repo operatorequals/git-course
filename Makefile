@@ -5,7 +5,7 @@ VERSION=0.1.0
 TYPE=http
 
 challenges:
-	for repo in challenge*; do cp generic/* repos/$${repo}.git/hooks/ && cp $${repo}/* repos/$${repo}.git/hooks/; done
+	for repo in challenge*; do mkdir -p repos/$${repo}.git/hooks; cp generic/* repos/$${repo}.git/hooks/ && cp $${repo}/* repos/$${repo}.git/hooks/; done
 
 image: challenges
 	docker build -t $(REPO)$(IMAGE)-$(TYPE):$(VERSION) . -f deploy/$(TYPE).Dockerfile
